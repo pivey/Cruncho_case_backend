@@ -16,9 +16,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+const baseURL = 'https://maps.googleapis.com/maps/api/place/';
+
 const getNearbyRestaurants = async (lat: string, long: string) => {
   try {
-    return await axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&rankby=distance&type=restaurant&key=${PlacesApiKey}`);
+    return await axios.get(`${baseURL}nearbysearch/json?location=${lat},${long}&rankby=distance&type=restaurant&key=${PlacesApiKey}`);
   }
   catch (err) {
     console.log(err.message);

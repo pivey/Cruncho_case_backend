@@ -50,13 +50,14 @@ var app = express_1.default();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+var baseURL = 'https://maps.googleapis.com/maps/api/place/';
 var getNearbyRestaurants = function (lat, long) { return __awaiter(void 0, void 0, void 0, function () {
     var err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, axios.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + long + "&rankby=distance&type=restaurant&key=" + PlacesApiKey)];
+                return [4 /*yield*/, axios.get(baseURL + "nearbysearch/json?location=" + lat + "," + long + "&rankby=distance&type=restaurant&key=" + PlacesApiKey)];
             case 1: return [2 /*return*/, _a.sent()];
             case 2:
                 err_1 = _a.sent();
