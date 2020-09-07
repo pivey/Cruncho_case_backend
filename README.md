@@ -6,3 +6,7 @@ Technologies:
 
 1. Express
 2. Typescript
+
+#### Instructions:
+
+run: npm run dev
