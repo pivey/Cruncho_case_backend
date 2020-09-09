@@ -9,4 +9,5 @@ Technologies:
 
 #### Instructions:
 
-run: npm run dev
+1. clone this repo
+2. run npm i && npm run dev
