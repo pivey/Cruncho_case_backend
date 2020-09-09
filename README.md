@@ -6,6 +6,7 @@ Technologies:
 
 1. Express
 2. Typescript
+3. Axios
 
 #### Instructions:
 
