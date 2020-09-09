@@ -1,6 +1,7 @@
 import express, {
   Application, Request, Response
 } from 'express';
+import { NearbyPlacesObj } from '../types';
 
 const axios = require('axios');
 const bodyParser = require('body-parser');
@@ -31,8 +32,25 @@ app.post('/nearbyRestaurants', async (req: Request, res: Response) => {
   const { latitude, longitude } = req.body;
   if (res.statusCode === 200 && latitude && longitude) {
     const result = await getNearbyRestaurants(latitude, longitude);
-    console.log('restaurants here', result.data.results);
-    res.send(result.data.results);
+    const output = result.data.results.reduce((acc: any[], el: NearbyPlacesObj) => {
+      if (el.business_status === 'OPERATIONAL') {
+        acc.push({
+          location: { ...el.geometry.location },
+          open: el.opening_hours?.open_now || false,
+          photoReference: el?.photos?.[0].photo_reference,
+          icon: el.icon,
+          name: el.name,
+          placeId: el.place_id,
+          priceLevel: el.price_level,
+          rating: el.rating,
+          types: el.types,
+          userRatingTotal: el.user_ratings_total,
+          vicinity: el.vicinity
+        });
+      }
+      return acc;
+    }, []);
+    res.send(output);
   }
 });
 

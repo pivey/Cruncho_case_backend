@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -68,7 +79,7 @@ var getNearbyRestaurants = function (lat, long) { return __awaiter(void 0, void 
     });
 }); };
 app.post('/nearbyRestaurants', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, latitude, longitude, result;
+    var _a, latitude, longitude, result, output;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -77,8 +88,26 @@ app.post('/nearbyRestaurants', function (req, res) { return __awaiter(void 0, vo
                 return [4 /*yield*/, getNearbyRestaurants(latitude, longitude)];
             case 1:
                 result = _b.sent();
-                console.log('restaurants here', result.data.results);
-                res.send(result.data.results);
+                output = result.data.results.reduce(function (acc, el) {
+                    var _a, _b;
+                    if (el.business_status === 'OPERATIONAL') {
+                        acc.push({
+                            location: __assign({}, el.geometry.location),
+                            open: ((_a = el.opening_hours) === null || _a === void 0 ? void 0 : _a.open_now) || false,
+                            photoReference: (_b = el === null || el === void 0 ? void 0 : el.photos) === null || _b === void 0 ? void 0 : _b[0].photo_reference,
+                            icon: el.icon,
+                            name: el.name,
+                            placeId: el.place_id,
+                            priceLevel: el.price_level,
+                            rating: el.rating,
+                            types: el.types,
+                            userRatingTotal: el.user_ratings_total,
+                            vicinity: el.vicinity
+                        });
+                    }
+                    return acc;
+                }, []);
+                res.send(output);
                 _b.label = 2;
             case 2: return [2 /*return*/];
         }

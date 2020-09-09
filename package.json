@@ -31,32 +31,5 @@
         "eslint-plugin-import": "^2.22.0",
         "eslint-plugin-prettier": "^3.1.4",
         "prettier": "^2.1.1"
-    },
-    "eslintConfig": {
-        "parser": "@typescript-eslint/parser",
-        "extends": "airbnb-base",
-        "env": {
-            "es6": true,
-            "browser": true
-        },
-        "rules": {
-            "brace-style": [
-                "error",
-                "stroustrup"
-            ],
-            "comma-dangle": [
-                "error",
-                "never"
-            ],
-            "no-unused-vars": [
-                "warn"
-            ],
-            "no-var": [
-                "off"
-            ],
-            "one-var": [
-                "off"
-            ]
-        }
     }
 }
